@@ -24,7 +24,7 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class ServerTCP {
+public class ServerTcp {
 
 	protected static int numConectados = 0;
 	protected static int numParaEnviar =0;
@@ -36,7 +36,7 @@ public class ServerTCP {
 
 	public static void main(String[] args) 
 	{
-		ServerTCP main = new ServerTCP();
+		ServerTcp main = new ServerTcp();
 		espera = new Object();
 		Scanner s = new Scanner(System.in);
 		bufferThreads = new ArrayList<>();
