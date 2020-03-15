@@ -1,0 +1,6 @@
+el cliente respondio: R
+ El servidor le envio la siguiente informacion del archivo:
+ 1. longitud: 72
+ 2. nombre: dummy.txt
+ 3. hash: 5.0 
+ El ciente recibio el archvio de manera incompleta

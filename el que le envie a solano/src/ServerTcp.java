@@ -1,14 +1,19 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 
 
@@ -105,37 +110,62 @@ public class ServerTcp {
 				fileReader.read(sendData);
 				//Creo un mensaje Json para enviar atributos del archivo el nombre y el tamano, esto me servira 
 				//del lado del servidor
-				
+
 				out.writeUTF(""+file.length());
 				out.writeUTF(""+file.getName());
-				
-				int a= (int) (file.length()/13);
+
+				double a= (double) (file.length()/13);
 				out.writeUTF(""+a);    
 
 				// Envio el arreglo de bytes al cliente
 				out.write(sendData, 0, sendData.length);	
-				BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 				Long inicio = System.currentTimeMillis();
-				BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
-				Long fin = System.currentTimeMillis();
-				System.out.println("se demoro en milesimas :"+(fin-inicio));
+				BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));				
+				BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());				
 
 				message = in.readUTF();
+				Long fin = System.currentTimeMillis();
+				System.out.println("se demoro en milesimas :"+(fin-inicio));
 				if(message.equals("R"))
 				{
 					System.out.println("El cliente confirma el correcto envio del archivo.");
+					java.util.Date fecha = new Date(System.currentTimeMillis());					
+					File logFile = new File("C:\\Users\\jobaj\\git\\lab3_redes\\el que le envie a solano\\log"+"/log-"+System.currentTimeMillis());
+					BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile));
+					bWriter.write("el cliente respondio: R"
+							+ "\n El servidor le envio la siguiente informacion del archivo:"
+							+ "\n 1. longitud: "+file.length()+""
+							+ "\n 2. nombre: "+file.getName()+""
+							+ "\n 3. hash: "+a+" "
+							+ "\n El ciente recibio el archvio de manera completa"
+							+ "\n se demoro en milesimas :"+(fin-inicio));
+					bWriter.flush();
+					bWriter.close();
+					bis.close();
+					bos.close();
 				}
 				else if ((message.equals("E")))
 				{
-					System.out.println("Me muero. Me desmayo. CALLESE TCP lesbiano.");
+					System.out.println("El cliente no recibio el archivo de formacorrecta.");
+
+					java.util.Date fecha = new Date(System.currentTimeMillis());					
+					File logFile = new File("C:\\Users\\jobaj\\git\\lab3_redes\\el que le envie a solano\\log"+"/log-"+System.currentTimeMillis());
+					BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile));
+					bWriter.write("el cliente respondio: R"
+							+ "\n El servidor le envio la siguiente informacion del archivo:"
+							+ "\n 1. longitud: "+file.length()+""
+							+ "\n 2. nombre: "+file.getName()+""
+							+ "\n 3. hash: "+a+" "
+							+ "\n El ciente recibio el archvio de manera incompleta"
+					        + "\n se demoro en milesimas :"+(fin-inicio));
+					bWriter.flush();
+					bWriter.close();
+					bis.close();
+					bos.close();		
 				}
-
-				bis.close();
-				bos.close();		
+				out.flush();
+				in.close();
 			}
-			out.flush();
-			in.close();
-
 		}		
 		catch (IOException e) {
 			e.printStackTrace();

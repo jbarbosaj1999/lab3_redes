@@ -67,7 +67,7 @@ public class ClienteTcp {
 			System.out.println("hash code: "+stringHashServer);
 
 
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\jobaj\\Desktop\\"+filename);
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\jobaj\\Desktop\\prueba\\"+filename);
 
 			//Carga la data recibida a traves del InputStream, en el FileOutputStream a traves de un while
 			int count=0;           
@@ -79,21 +79,21 @@ public class ClienteTcp {
 				size -= count;   
 			}
 			fos.close();
-			File file = new File("C:\\Users\\jobaj\\Desktop\\"+filename);
+			File file = new File("C:\\Users\\jobaj\\Desktop\\prueba\\"+filename);
 			
 			System.out.println("en el cliente el hash es:" + file.length()/13);
-			long hashCliente = file.length()/13;
+			double hashCliente = (double)file.length()/13;
 			
-			Long hashServer = Long.parseLong(stringHashServer);
+			double hashServer = Double.parseDouble(stringHashServer);
 			
 			if(hashCliente ==  hashServer)
 			{
-				System.out.println("el archivo fue correctamente recivido.");			
+				System.out.println("el archivo fue correctamente recibido.");			
 				out.writeUTF("R"); 	
 			}
 			else			
 			{
-				System.out.println("el archivo no fue correctamente recivido.");				
+				System.out.println("el archivo no fue correctamente recibido.");				
 				out.writeUTF("E"); 	
 			}
 
