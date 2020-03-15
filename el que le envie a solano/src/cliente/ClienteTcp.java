@@ -39,7 +39,7 @@ public class ClienteTcp {
 
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException, NumberFormatException, JSONException {
 		// Connect to local socket on port 4444 
-		ClienteTcp tcp = new ClienteTcp(InetAddress.getByName("localhost"),4446);
+		ClienteTcp tcp = new ClienteTcp(InetAddress.getByName("3.88.127.147"),4446);
 	}
 
 

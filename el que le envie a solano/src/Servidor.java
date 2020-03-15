@@ -39,15 +39,15 @@ public class Servidor extends Thread
 		int arch = s.nextInt();
 		if(arch == 1)
 		{
-			f =new File("C:\\Users\\jobaj\\eclipse-workspace\\Caso1\\data\\dummy.txt"); 
+			f =new File("/home/ubuntu/lab3_redes/el que le envie a solano/data/dummy.txt"); 
 		}
 		else if(arch == 2)
 		{
-			f= new File("C:\\Users\\jobaj\\eclipse-workspace\\Caso1\\data\\1.jpg");
+			f= new File("/home/ubuntu/lab3_redes/el que le envie a solano/data/1.jpg");
 		}
 		else if(arch == 3)
 		{
-			f =new File("C:\\Users\\jobaj\\eclipse-workspace\\Caso1\\data\\_War Thunder ESP_ Mig 21 + Mi 35 + Tunguska.mp4"); 
+			f =new File("/home/ubuntu/lab3_redes/el que le envie a solano/data/video1.mp4"); 
 		}
 	}
 
