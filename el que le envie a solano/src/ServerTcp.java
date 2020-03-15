@@ -114,7 +114,7 @@ public class ServerTcp {
 				out.writeUTF(""+file.length());
 				out.writeUTF(""+file.getName());
 
-				double a= (double) (file.length()/13);
+				long a= (long) (file.length()/13);
 				out.writeUTF(""+a);    
 
 				// Envio el arreglo de bytes al cliente
@@ -130,7 +130,7 @@ public class ServerTcp {
 				{
 					System.out.println("El cliente confirma el correcto envio del archivo.");
 					java.util.Date fecha = new Date(System.currentTimeMillis());					
-					File logFile = new File("C:\\Users\\jobaj\\git\\lab3_redes\\el que le envie a solano\\log"+"/log-"+System.currentTimeMillis());
+					File logFile = new File("/home/ubuntu/lab3_redes/el que le envie a solano/log"+"/log-"+System.currentTimeMillis());
 					BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile));
 					bWriter.write("el cliente respondio: R"
 							+ "\n El servidor le envio la siguiente informacion del archivo:"
@@ -149,7 +149,7 @@ public class ServerTcp {
 					System.out.println("El cliente no recibio el archivo de formacorrecta.");
 
 					java.util.Date fecha = new Date(System.currentTimeMillis());					
-					File logFile = new File("C:\\Users\\jobaj\\git\\lab3_redes\\el que le envie a solano\\log"+"/log-"+System.currentTimeMillis());
+					File logFile = new File("/home/ubuntu/lab3_redes/el que le envie a solano/log"+"/log-"+System.currentTimeMillis());
 					BufferedWriter bWriter = new BufferedWriter(new FileWriter(logFile));
 					bWriter.write("el cliente respondio: R"
 							+ "\n El servidor le envio la siguiente informacion del archivo:"

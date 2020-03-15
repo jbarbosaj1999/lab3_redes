@@ -64,7 +64,8 @@ public class ClienteTcp {
 			System.out.println("nombre: "+filename);
 			
 			String stringHashServer = in.readUTF();
-			System.out.println("hash code: "+stringHashServer);
+			long hashServer = Long.parseLong(stringHashServer);
+			System.out.println("hash code: "+hashServer);
 
 
 			FileOutputStream fos = new FileOutputStream("C:\\Users\\jobaj\\Desktop\\prueba\\"+filename);
@@ -81,10 +82,11 @@ public class ClienteTcp {
 			fos.close();
 			File file = new File("C:\\Users\\jobaj\\Desktop\\prueba\\"+filename);
 			
-			System.out.println("en el cliente el hash es:" + file.length()/13);
-			double hashCliente = (double)file.length()/13;
+			long hashCliente = (long)file.length()/13;
+			System.out.println("en el cliente el hash es:" +hashCliente);
 			
-			double hashServer = Double.parseDouble(stringHashServer);
+			
+			
 			
 			if(hashCliente ==  hashServer)
 			{
