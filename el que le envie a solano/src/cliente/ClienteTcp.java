@@ -3,15 +3,14 @@ package cliente;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-
 import java.io.FileOutputStream;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

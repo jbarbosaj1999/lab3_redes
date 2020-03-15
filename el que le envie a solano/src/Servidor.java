@@ -1,12 +1,4 @@
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.Socket;
-import java.time.Year;
 import java.util.Scanner;
 
 public class Servidor extends Thread
