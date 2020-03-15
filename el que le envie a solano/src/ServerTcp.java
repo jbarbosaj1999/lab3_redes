@@ -8,11 +8,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-import org.json.simple.JSONValue;
+
 
 public class ServerTcp {
 
@@ -107,13 +105,12 @@ public class ServerTcp {
 				fileReader.read(sendData);
 				//Creo un mensaje Json para enviar atributos del archivo el nombre y el tamano, esto me servira 
 				//del lado del servidor
-				Map<String, String> jsonObj = new LinkedHashMap<String,String >();
-				jsonObj.put("fileLength", String.valueOf(file.length()));
-				jsonObj.put("fileName", file.getName()); 
+				
+				out.writeUTF(""+file.length());
+				out.writeUTF(""+file.getName());
+				
 				int a= (int) (file.length()/13);
-				jsonObj.put("hashCode", ""+a);
-
-				out.writeUTF(JSONValue.toJSONString(jsonObj));    
+				out.writeUTF(""+a);    
 
 				// Envio el arreglo de bytes al cliente
 				out.write(sendData, 0, sendData.length);	
@@ -128,7 +125,8 @@ public class ServerTcp {
 				{
 					System.out.println("El cliente confirma el correcto envio del archivo.");
 				}
-				else {
+				else if ((message.equals("E")))
+				{
 					System.out.println("Me muero. Me desmayo. CALLESE TCP lesbiano.");
 				}
 

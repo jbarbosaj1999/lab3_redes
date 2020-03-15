@@ -8,13 +8,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.json.JSONException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 
 public class ClienteTcp {
@@ -50,30 +45,33 @@ public class ClienteTcp {
 
 
 	private static boolean receiveFile( DataInputStream in, DataOutputStream out) throws NumberFormatException, JSONException  {
-		Path filename = null;
+		String filename = null;
 		try {		
 			//Esta listo para recibir
 			out.writeUTF("R"); 	
 			
 			//recibe el header del arcivo
-			String fileHeader = in.readUTF();
-			System.out.println(fileHeader);
+			String longitud = in.readUTF();
+			System.out.println("longitud: "+longitud);
 			
-			//Parsea el mensaje recibido para obtener el nombre y la longitud
-			JSONParser parserj = new JSONParser();
-			JSONObject obj = (JSONObject) parserj.parse(fileHeader);
+			//Parsea el mensaje recibido para obtener el nombre y la longitud			
 
 			//Crea un array de bytes con la longitud recibida para almacenar el archivo
-			byte[] receivedData = new byte[Integer.valueOf(obj.get("fileLength").toString())];
+			byte[] receivedData = new byte[Integer.valueOf(longitud)];
 
 			//Crea un archivo con el filename recibido            
-			filename = Paths.get(obj.get("fileName").toString());
+		    filename = in.readUTF();
+			System.out.println("nombre: "+filename);
+			
+			String stringHashServer = in.readUTF();
+			System.out.println("hash code: "+stringHashServer);
 
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\jobaj\\Desktop\\"+filename.toString());
+
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\jobaj\\Desktop\\"+filename);
 
 			//Carga la data recibida a traves del InputStream, en el FileOutputStream a traves de un while
 			int count=0;           
-			long size = Integer.valueOf(obj.get("fileLength").toString());   
+			long size = Integer.valueOf(longitud);   
 
 			while (size > 0 && (count = in.read(receivedData, 0, (int)Math.min(receivedData.length, size))) != -1)   
 			{   
@@ -81,11 +79,11 @@ public class ClienteTcp {
 				size -= count;   
 			}
 			fos.close();
-			File file = new File("C:\\Users\\jobaj\\Desktop\\"+filename.toString());
+			File file = new File("C:\\Users\\jobaj\\Desktop\\"+filename);
 			
 			System.out.println("en el cliente el hash es:" + file.length()/13);
 			long hashCliente = file.length()/13;
-			String stringHashServer =  (String) obj.get("hashCode");
+			
 			Long hashServer = Long.parseLong(stringHashServer);
 			
 			if(hashCliente ==  hashServer)
@@ -95,7 +93,7 @@ public class ClienteTcp {
 			}
 			else			
 			{
-				System.out.println("el archivo fue correctamente recivido.");				
+				System.out.println("el archivo no fue correctamente recivido.");				
 				out.writeUTF("E"); 	
 			}
 
@@ -106,7 +104,7 @@ public class ClienteTcp {
 		
 			return true;
 
-		} catch (IOException | ParseException e) {
+		} catch (IOException e) {
 			((Throwable) e).printStackTrace();
 			return false;
 		}
